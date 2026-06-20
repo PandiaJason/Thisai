@@ -28,10 +28,10 @@
 
     <!-- Left Side: Branding and details -->
     <div class="hidden md:flex md:w-1/2 p-12 flex-col justify-between relative overflow-hidden border-r border-slate-200" style="background: linear-gradient(135deg, #f0f7ff, #e0f2fe, #e2e8f0);">
-        <!-- Vibrant Glow Shapes (Subtle & Elegant Light Blue) -->
-        <div class="absolute w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[100px] -top-24 -left-24 pointer-events-none"></div>
-        <div class="absolute w-[600px] h-[600px] bg-indigo-400/8 rounded-full blur-[120px] top-1/4 -left-48 pointer-events-none"></div>
-        <div class="absolute w-[500px] h-[500px] bg-purple-400/10 rounded-full blur-[100px] -bottom-24 -right-24 pointer-events-none"></div>
+        <!-- Elite Mesh Glow Background (Subtle & Elegant light blobs) -->
+        <div class="absolute w-[500px] h-[500px] bg-sky-300/30 rounded-full blur-[100px] -top-32 -left-32 pointer-events-none"></div>
+        <div class="absolute w-[600px] h-[600px] bg-indigo-300/25 rounded-full blur-[130px] top-1/4 -left-48 pointer-events-none"></div>
+        <div class="absolute w-[450px] h-[450px] bg-blue-300/30 rounded-full blur-[100px] -bottom-24 -right-16 pointer-events-none"></div>
         
         <div class="relative z-10">
             <div class="flex items-center gap-4">
