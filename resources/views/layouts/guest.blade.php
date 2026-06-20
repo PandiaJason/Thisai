@@ -27,18 +27,18 @@
 <body class="h-full bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col sm:flex-row antialiased overflow-hidden">
 
     <!-- Left Side: Branding and details -->
-    <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 p-12 flex-col justify-between relative overflow-hidden border-r border-slate-900">
-        <!-- Vibrant Glow Shapes -->
-        <div class="absolute w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[100px] -top-24 -left-24 pointer-events-none"></div>
-        <div class="absolute w-[600px] h-[600px] bg-indigo-600/15 rounded-full blur-[120px] top-1/4 -left-48 pointer-events-none"></div>
-        <div class="absolute w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[100px] -bottom-24 -right-24 pointer-events-none"></div>
+    <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-12 flex-col justify-between relative overflow-hidden border-r border-slate-900">
+        <!-- Vibrant Glow Shapes (Subtle & Elegant) -->
+        <div class="absolute w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[100px] -top-24 -left-24 pointer-events-none"></div>
+        <div class="absolute w-[600px] h-[600px] bg-indigo-600/8 rounded-full blur-[120px] top-1/4 -left-48 pointer-events-none"></div>
+        <div class="absolute w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] -bottom-24 -right-24 pointer-events-none"></div>
         
         <div class="relative z-10">
             <div class="flex items-center gap-4">
                 <img src="{{ asset('images/logo.png') }}" alt="THISAI Logo" class="h-28 w-28 object-contain">
                 <div class="flex flex-col">
-                    <span class="text-3xl font-black tracking-tight text-gradient leading-none">THISAI</span>
-                    <span class="text-sm uppercase font-bold tracking-widest text-blue-500 mt-1.5">IAS ACADEMY</span>
+                    <span class="text-3xl font-black tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent leading-none">THISAI</span>
+                    <span class="text-sm uppercase font-bold tracking-widest text-amber-400 mt-1.5">IAS ACADEMY</span>
                 </div>
             </div>
             <p class="text-slate-400 mt-3 text-sm font-semibold max-w-sm">Premium Learning Management & MCQ Examination Platform</p>
