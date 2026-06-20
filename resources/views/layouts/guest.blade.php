@@ -37,7 +37,7 @@
             <div class="flex items-center gap-4">
                 <img src="{{ asset('images/logo.png') }}" alt="THISAI Logo" class="h-28 w-28 object-contain">
                 <div class="flex flex-col">
-                    <span class="text-3xl font-black tracking-tight bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 bg-clip-text text-transparent leading-none">THISAI</span>
+                    <span class="text-3xl font-black tracking-tight text-gradient leading-none">THISAI</span>
                     <span class="text-sm uppercase font-bold tracking-widest text-blue-600 mt-1.5">IAS ACADEMY</span>
                 </div>
             </div>
