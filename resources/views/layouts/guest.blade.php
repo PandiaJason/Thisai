@@ -27,40 +27,40 @@
 <body class="h-full bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col sm:flex-row antialiased overflow-hidden">
 
     <!-- Left Side: Branding and details -->
-    <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-12 flex-col justify-between relative overflow-hidden border-r border-slate-900">
-        <!-- Vibrant Glow Shapes (Subtle & Elegant) -->
-        <div class="absolute w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[100px] -top-24 -left-24 pointer-events-none"></div>
-        <div class="absolute w-[600px] h-[600px] bg-indigo-600/8 rounded-full blur-[120px] top-1/4 -left-48 pointer-events-none"></div>
-        <div class="absolute w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] -bottom-24 -right-24 pointer-events-none"></div>
+    <div class="hidden md:flex md:w-1/2 p-12 flex-col justify-between relative overflow-hidden border-r border-slate-200" style="background: linear-gradient(135deg, #f0f7ff, #e0f2fe, #e2e8f0);">
+        <!-- Vibrant Glow Shapes (Subtle & Elegant Light Blue) -->
+        <div class="absolute w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[100px] -top-24 -left-24 pointer-events-none"></div>
+        <div class="absolute w-[600px] h-[600px] bg-indigo-400/8 rounded-full blur-[120px] top-1/4 -left-48 pointer-events-none"></div>
+        <div class="absolute w-[500px] h-[500px] bg-purple-400/10 rounded-full blur-[100px] -bottom-24 -right-24 pointer-events-none"></div>
         
         <div class="relative z-10">
             <div class="flex items-center gap-4">
                 <img src="{{ asset('images/logo.png') }}" alt="THISAI Logo" class="h-28 w-28 object-contain">
                 <div class="flex flex-col">
-                    <span class="text-3xl font-black tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent leading-none">THISAI</span>
-                    <span class="text-sm uppercase font-bold tracking-widest text-amber-400 mt-1.5">IAS ACADEMY</span>
+                    <span class="text-3xl font-black tracking-tight bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 bg-clip-text text-transparent leading-none">THISAI</span>
+                    <span class="text-sm uppercase font-bold tracking-widest text-blue-600 mt-1.5">IAS ACADEMY</span>
                 </div>
             </div>
-            <p class="text-slate-400 mt-3 text-sm font-semibold max-w-sm">Premium Learning Management & MCQ Examination Platform</p>
+            <p class="text-slate-600 mt-3 text-sm font-semibold max-w-sm">Premium Learning Management & MCQ Examination Platform</p>
         </div>
 
         <div class="max-w-md my-auto relative z-10">
-            <h1 class="text-4xl font-extrabold tracking-tight text-slate-100 mb-4 leading-tight">Elevate Your Civil Services Preparation</h1>
-            <p class="text-slate-300 text-sm leading-relaxed mb-6">Access top-tier video lessons, daily current affairs analysis, and full-length exam mock series designed by experienced faculty mentors.</p>
+            <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-4 leading-tight">Elevate Your Civil Services Preparation</h1>
+            <p class="text-slate-600 text-sm leading-relaxed mb-6">Access top-tier video lessons, daily current affairs analysis, and full-length exam mock series designed by experienced faculty mentors.</p>
             
             <div class="flex flex-col gap-3">
-                <div class="flex items-center gap-3 bg-slate-900/60 border border-slate-800 p-3 rounded-lg">
+                <div class="flex items-center gap-3 bg-white/80 border border-blue-100/50 p-3 rounded-lg shadow-sm">
                     <span class="w-2.5 h-2.5 bg-red-500 rounded-full pulse-red-dot"></span>
                     <div class="text-xs">
-                        <span class="font-bold text-slate-100 block">Daily Live Telecast</span>
-                        <span class="text-slate-400">Join interactive sessions every morning from 06:00 AM - 07:00 AM.</span>
+                        <span class="font-bold text-slate-800 block">Daily Live Telecast</span>
+                        <span class="text-slate-600">Join interactive sessions every morning from 06:00 AM - 07:00 AM.</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 bg-slate-900/60 border border-slate-800 p-3 rounded-lg">
-                    <svg class="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                <div class="flex items-center gap-3 bg-white/80 border border-purple-100/50 p-3 rounded-lg shadow-sm">
+                    <svg class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
                     <div class="text-xs">
-                        <span class="font-bold text-slate-100 block">Normalized Percentiles</span>
-                        <span class="text-slate-400">Understand your standing with real-time peer analysis & rank scoring.</span>
+                        <span class="font-bold text-slate-800 block">Normalized Percentiles</span>
+                        <span class="text-slate-600">Understand your standing with real-time peer analysis & rank scoring.</span>
                     </div>
                 </div>
             </div>
