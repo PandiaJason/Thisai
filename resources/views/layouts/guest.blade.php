@@ -49,14 +49,14 @@
             <p class="text-slate-600 text-sm leading-relaxed mb-6">Access top-tier video lessons, daily current affairs analysis, and full-length exam mock series designed by experienced faculty mentors.</p>
             
             <div class="flex flex-col gap-3">
-                <div class="flex items-center gap-3 bg-white/80 border border-blue-100/50 p-3 rounded-lg shadow-sm">
+                <div class="flex items-center gap-3 bg-white/70 backdrop-blur-md p-3 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/5" style="border: 1px solid rgba(59, 130, 246, 0.12);">
                     <span class="w-2.5 h-2.5 bg-red-500 rounded-full pulse-red-dot"></span>
                     <div class="text-xs">
                         <span class="font-bold text-slate-800 block">Daily Live Telecast</span>
                         <span class="text-slate-600">Join interactive sessions every morning from 06:00 AM - 07:00 AM.</span>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 bg-white/80 border border-purple-100/50 p-3 rounded-lg shadow-sm">
+                <div class="flex items-center gap-3 bg-white/70 backdrop-blur-md p-3 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/5" style="border: 1px solid rgba(139, 92, 246, 0.12);">
                     <svg class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
                     <div class="text-xs">
                         <span class="font-bold text-slate-800 block">Normalized Percentiles</span>
