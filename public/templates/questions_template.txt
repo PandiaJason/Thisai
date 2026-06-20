@@ -1,0 +1,56 @@
+THISAI QUESTION IMPORT TEMPLATE & GUIDE
+======================================
+
+Instructions:
+1. Write each question block separated by a blank line (double enter).
+2. The question text can be multiple lines (useful for listing statements like 1, 2, 3).
+3. Options must start with A. B. C. D. (or A) B) C) D) ) followed by a space.
+4. ANSWER is mandatory and must match the correct option letter (e.g. ANSWER: B).
+5. SUBJECT is optional. Use one of: Polity, History, Geography, Economics, Environment, Science and Technology, Current Affairs.
+6. DIFFICULTY is optional. Use: easy, medium, or hard.
+7. EXPLANATION is optional and can span multiple lines at the end of the block.
+
+--------------------------------------------------------------------------------
+
+EXAMPLE 1: Single Line Question
+-------------------------------
+Who was the first President of the United States?
+A. George Washington
+B. John Adams
+C. Thomas Jefferson
+D. James Madison
+ANSWER: A
+SUBJECT: History
+DIFFICULTY: easy
+EXPLANATION: George Washington served as the first president of the United States from 1789 to 1797.
+
+--------------------------------------------------------------------------------
+
+EXAMPLE 2: Multi-line UPSC-style Question
+-----------------------------------------
+Consider the following statements regarding the President of India:
+1. The President can resign by writing to the Vice-President.
+2. The President holds office for a term of five years from the date on which they enter office.
+Which of the statements given above is/are correct?
+A. 1 only
+B. 2 only
+C. Both 1 and 2
+D. Neither 1 nor 2
+ANSWER: C
+SUBJECT: Polity
+DIFFICULTY: medium
+EXPLANATION: Article 56 of the Constitution of India deals with the term of office of the President. The President can resign from office by writing under their hand addressed to the Vice-President.
+
+--------------------------------------------------------------------------------
+
+EXAMPLE 3: Simple General Science Question
+------------------------------------------
+Which gas is most abundant in the Earth's atmosphere?
+A. Oxygen
+B. Nitrogen
+C. Carbon Dioxide
+D. Argon
+ANSWER: B
+SUBJECT: Science and Technology
+DIFFICULTY: easy
+EXPLANATION: Nitrogen makes up approximately 78% of the Earth's atmosphere, followed by oxygen at 21%.

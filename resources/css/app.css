@@ -1,0 +1,307 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+}
+
+@layer base {
+  :root {
+    --primary: 37 99 235;
+    --background: 240 244 248;
+    
+    --bg-main: #eef2f7;
+    --text-main: #1e293b;
+    --text-heading: #0f172a;
+    
+    --card-bg: #ffffff;
+    --card-border: #dbeafe;
+    --card-border-hover: #93c5fd;
+    --card-shadow: 0 2px 12px rgba(37, 99, 235, 0.07);
+    --card-shadow-hover: 0 8px 28px rgba(37, 99, 235, 0.14);
+    
+    --input-bg: #ffffff;
+    --input-border: #cbd5e1;
+    --text-muted: #475569;
+    
+    --header-bg: #ffffff;
+    --header-border: #dbeafe;
+    --header-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+  }
+
+  .dark {
+    --bg-main: #0f172a;
+    --text-main: #cbd5e1;
+    --text-heading: #f8fafc;
+    
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --card-border-hover: #475569;
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    --card-shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
+    
+    --input-bg: #0f172a;
+    --input-border: #334155;
+    --text-muted: #94a3b8;
+    
+    --header-bg: #1e293b;
+    --header-border: #334155;
+    --header-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.025em;
+    color: var(--text-heading);
+  }
+}
+
+/* ── Base Card ─────────────────────────────────── */
+.glass-card,
+.neumorphic-card {
+  background: var(--card-bg) !important;
+  border: 1.5px solid var(--card-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--card-shadow) !important;
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.glass-card-hover:hover,
+.glass-card:hover,
+.neumorphic-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow-hover) !important;
+  border-color: var(--card-border-hover) !important;
+}
+
+/* ── Typography inside cards ─────────────────── */
+.glass-card h1, .glass-card h2, .glass-card h3,
+.glass-card h4, .glass-card h5,
+.neumorphic-card h1, .neumorphic-card h2, .neumorphic-card h3,
+.neumorphic-card h4, .neumorphic-card h5 {
+  color: var(--text-heading) !important;
+}
+
+/* Fix any leftover white text on white cards */
+.glass-card .text-slate-100,
+.glass-card .text-slate-200,
+.glass-card-hover .text-slate-100,
+.glass-card-hover .text-slate-200,
+.neumorphic-card .text-slate-100,
+.neumorphic-card .text-slate-200 {
+  color: var(--text-main) !important;
+}
+
+/* Keep true white inside coloured buttons / badges */
+[class*="bg-blue-6"] { color: #ffffff; }
+[class*="bg-blue-7"] { color: #ffffff; }
+[class*="bg-red-6"] { color: #ffffff; }
+[class*="bg-emerald-6"] { color: #ffffff; }
+[class*="bg-purple-6"] { color: #ffffff; }
+[class*="bg-amber-6"] { color: #ffffff; }
+[class*="bg-slate-7"] { color: #ffffff; }
+[class*="bg-slate-8"] { color: #ffffff; }
+
+/* ── Bold Blue Stat Cards ────────────────────── */
+.stat-card-blue   { background: linear-gradient(135deg, #2563eb, #1d4ed8) !important; color: #ffffff !important; border-color: transparent !important; }
+.stat-card-purple { background: linear-gradient(135deg, #7c3aed, #6d28d9) !important; color: #ffffff !important; border-color: transparent !important; }
+.stat-card-green  { background: linear-gradient(135deg, #059669, #047857) !important; color: #ffffff !important; border-color: transparent !important; }
+.stat-card-amber  { background: linear-gradient(135deg, #d97706, #b45309) !important; color: #ffffff !important; border-color: transparent !important; }
+
+.stat-card-blue *, .stat-card-purple *, .stat-card-green *, .stat-card-amber * {
+  color: #ffffff !important;
+}
+
+/* ── Section heading accent bar ─────────────── */
+.section-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-heading);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-title::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(to bottom, #2563eb, #7c3aed);
+  border-radius: 99px;
+}
+
+/* ── Text Gradient ───────────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, #1e40af, #2563eb, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+/* ── Header / Nav ────────────────────────────── */
+header.glass-card {
+  background: var(--header-bg) !important;
+  border-bottom: 2px solid var(--header-border) !important;
+  box-shadow: var(--header-shadow) !important;
+  border-radius: 0 !important;
+}
+
+header .text-slate-300,
+header .text-slate-600 {
+  color: var(--text-muted) !important;
+  font-weight: 600;
+}
+
+header .text-slate-300:hover,
+header .text-slate-600:hover,
+header a:hover {
+  color: #2563eb !important;
+}
+
+header form input {
+  background-color: var(--input-bg) !important;
+  color: var(--text-main) !important;
+  border: 1.5px solid var(--input-border) !important;
+  border-radius: 9999px;
+}
+
+header form input::placeholder {
+  color: #94a3b8 !important;
+}
+
+header form input:focus {
+  border-color: #2563eb !important;
+  background-color: var(--input-bg) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+}
+
+/* ── Dropdown ────────────────────────────────── */
+.absolute.right-0.mt-2.w-48 {
+  background: var(--card-bg) !important;
+  border: 1.5px solid var(--card-border) !important;
+  box-shadow: var(--card-shadow-hover) !important;
+  border-radius: 14px;
+}
+
+.absolute.right-0.mt-2.w-48 a,
+.absolute.right-0.mt-2.w-48 button {
+  color: var(--text-main) !important;
+  font-weight: 500;
+}
+
+.absolute.right-0.mt-2.w-48 a:hover,
+.absolute.right-0.mt-2.w-48 button:hover {
+  background-color: var(--bg-main) !important;
+  color: #2563eb !important;
+}
+
+/* ── Links in cards ─────────────────────────── */
+.glass-card a:not([class*="bg-"]):hover {
+  color: #2563eb !important;
+}
+
+/* ── Scrollbars ─────────────────────────────── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-main); }
+::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+
+/* ── Dark Mode Class Overrides ─────────────────── */
+.dark .bg-white {
+  background-color: var(--card-bg) !important;
+}
+.dark .bg-slate-50 {
+  background-color: var(--bg-main) !important;
+}
+.dark .bg-slate-100 {
+  background-color: #0f172a !important;
+}
+.dark .border-slate-200 {
+  border-color: var(--card-border) !important;
+}
+.dark .border-slate-100 {
+  border-color: var(--card-border) !important;
+}
+.dark .text-slate-800 {
+  color: var(--text-heading) !important;
+}
+.dark .text-slate-700 {
+  color: var(--text-main) !important;
+}
+.dark .text-slate-600 {
+  color: var(--text-muted) !important;
+}
+.dark .text-slate-500 {
+  color: var(--text-muted) !important;
+}
+.dark .text-slate-400 {
+  color: var(--text-muted) !important;
+}
+
+/* Dark mode inputs override */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--text-main) !important;
+}
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* Dark Mode Badges */
+.dark .bg-blue-50 {
+  background-color: rgba(37, 99, 235, 0.15) !important;
+  color: #60a5fa !important;
+  border-color: rgba(37, 99, 235, 0.3) !important;
+}
+.dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+.dark .bg-red-50 {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+.dark .bg-amber-50 {
+  background-color: rgba(245, 158, 11, 0.15) !important;
+  color: #fbbf24 !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+/* Dark mode chart/text custom overrides */
+.dark .text-gray-500, .dark .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+.dark .border-gray-200, .dark .border-gray-100 {
+  border-color: var(--card-border) !important;
+}
+.dark .bg-gray-50 {
+  background-color: var(--bg-main) !important;
+}
+.dark .bg-gray-100 {
+  background-color: #0f172a !important;
+}
+
+
+/* ── Animations ──────────────────────────────── */
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(1.2); }
+}
+
+.pulse-red-dot {
+  animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
