@@ -31,7 +31,7 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
         await studentPage.goto('http://localhost:8000/login', { waitUntil: 'networkidle2' });
         await studentPage.waitForSelector('#email', { timeout: 10000 });
         
-        await studentPage.type('#email', 'student@thisai.com', { delay: 50 });
+        await studentPage.type('#email', 'jason@thisai.com', { delay: 50 });
         await studentPage.type('#password', 'password', { delay: 50 });
         await sleep(500);
         

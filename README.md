@@ -98,6 +98,18 @@ docker compose exec app php artisan test
 
 ---
 
+## 🛡️ Security & Anti-Cheating Protocols
+
+THISAI includes robust security constraints to protect exam integrity, user data, and premium assets:
+
+- **Anti-Piracy Video Protection (Bunny.net HLS Token Security)**: Prevents video leaks and link sharing by generating temporary SHA256-signed URLs (valid for 1 hour only) hashed with a secure private key.
+- **Proctoring & Fullscreen Enforcement**: Restricts exam screens to fullscreen mode. Detects browser visibility changes, tab-switches, and window resizing, automatically locking the student or submitting the exam on threshold violations.
+- **SQL Injection Defenses**: Built entirely using Laravel Eloquent ORM which utilizes PDO parameter bindings to render user inputs completely inert to query-injection attacks.
+- **Backend Time-Tampering Validation**: Evaluates test timers server-side by validating attempt start timestamps against real clock servers, completely neutralizing client-side javascript clock alterations.
+- **Session-Locked Submissions**: Protects exam states via a unique, cryptographically random 40-character token. All answer save APIs enforce ownership matching to reject parameter-tampering hacks.
+
+---
+
 ## 📊 Scalability & Performance Details
 
 ### Current Performance (Single Instance)
