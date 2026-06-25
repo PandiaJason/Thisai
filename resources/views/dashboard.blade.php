@@ -72,6 +72,27 @@
     </div>
 
 
+    <!-- Custom Whiteboard CSS styles -->
+    <style>
+        .canvas-grid {
+            background-color: #ffffff !important;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px) !important;
+            background-size: 20px 20px !important;
+        }
+        .canvas-ruled {
+            background-color: #ffffff !important;
+            background-image: linear-gradient(#e2e8f0 1px, transparent 1px) !important;
+            background-size: 100% 28px !important;
+        }
+        .canvas-blank {
+            background-color: #ffffff !important;
+        }
+        .active-color-btn {
+            box-shadow: 0 0 0 2px #3b82f6 !important;
+            border-color: #ffffff !important;
+        }
+    </style>
+
     <!-- Live Telecast Section -->
     @if($liveTelecast)
         <div id="live-session" class="glass-card p-6 rounded-2xl border border-red-500/20 shadow-xl space-y-4">
@@ -82,16 +103,376 @@
                     </span>
                     <h2 class="text-lg font-bold text-slate-800">{{ $liveTelecast->title }}</h2>
                 </div>
-                <span class="text-xs font-semibold text-slate-500">Expiring tonight at {{ $liveTelecast->auto_delete_at->format('h:i A') }}</span>
+                <div class="flex items-center gap-3">
+                    <button id="toggle-whiteboard-btn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-bold transition-all shadow-sm">
+                        <svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                        <span>Open Whiteboard</span>
+                    </button>
+                    <span class="text-xs font-semibold text-slate-500">Expiring tonight at {{ $liveTelecast->auto_delete_at->format('h:i A') }}</span>
+                </div>
             </div>
-            <div class="aspect-video w-full rounded-xl overflow-hidden bg-black border border-slate-100">
-                <iframe src="{{ $liveTelecast->stream_url }}" class="w-full h-full" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6" id="live-session-container">
+                <!-- Video Player Column -->
+                <div class="lg:col-span-5 transition-all duration-300" id="video-column">
+                    <div class="aspect-video w-full rounded-xl overflow-hidden bg-black border border-slate-100 shadow-inner">
+                        <iframe src="{{ $liveTelecast->stream_url }}" class="w-full h-full" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                    </div>
+                </div>
+
+                <!-- Whiteboard Column (Hidden by default, takes col-span-2 when open) -->
+                <div class="hidden lg:col-span-2 flex-col bg-slate-50 rounded-xl border border-slate-200/80 p-4 space-y-3 transition-all duration-300" id="whiteboard-column">
+                    <!-- Whiteboard Header & Controls -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+                        <!-- Colors -->
+                        <div class="flex items-center gap-1.5" id="whiteboard-colors">
+                            <button data-color="#0f172a" class="w-6 h-6 rounded-full bg-slate-900 border-2 border-transparent hover:border-white hover:ring-2 hover:ring-slate-300 active-color-btn" title="Black"></button>
+                            <button data-color="#ef4444" class="w-6 h-6 rounded-full bg-red-500 border-2 border-transparent hover:border-white hover:ring-2 hover:ring-slate-300" title="Red"></button>
+                            <button data-color="#3b82f6" class="w-6 h-6 rounded-full bg-blue-500 border-2 border-transparent hover:border-white hover:ring-2 hover:ring-slate-300" title="Blue"></button>
+                            <button data-color="#10b981" class="w-6 h-6 rounded-full bg-emerald-500 border-2 border-transparent hover:border-white hover:ring-2 hover:ring-slate-300" title="Green"></button>
+                            <button id="whiteboard-eraser-btn" class="w-6 h-6 rounded-full bg-slate-200 border-2 border-transparent hover:border-white hover:ring-2 hover:ring-slate-300 flex items-center justify-center" title="Eraser">
+                                <svg class="w-3.5 h-3.5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Size slider -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] uppercase font-bold text-slate-400">Size</span>
+                            <input type="range" id="whiteboard-brush-size" min="1" max="20" value="4" class="w-16 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                            <span id="brush-size-display" class="text-xs font-bold text-slate-500 w-4 text-center">4</span>
+                        </div>
+
+                        <!-- Background Patterns -->
+                        <div class="flex items-center gap-1 bg-slate-200 p-0.5 rounded-lg">
+                            <button data-pattern="blank" class="px-2 py-1 rounded text-[10px] font-bold bg-white text-slate-800 shadow-sm pattern-btn">Blank</button>
+                            <button data-pattern="grid" class="px-2 py-1 rounded text-[10px] font-bold text-slate-600 hover:text-slate-800 pattern-btn">Grid</button>
+                            <button data-pattern="ruled" class="px-2 py-1 rounded text-[10px] font-bold text-slate-600 hover:text-slate-800 pattern-btn">Ruled</button>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Container -->
+                    <div class="relative flex-1 bg-white border border-slate-200 rounded-lg overflow-hidden shadow-inner min-h-[350px]">
+                        <canvas id="whiteboard-canvas" class="w-full h-full bg-white canvas-blank block cursor-crosshair" style="touch-action: none; user-select: none; -webkit-user-select: none;"></canvas>
+                    </div>
+
+                    <!-- Footer Action Buttons -->
+                    <div class="flex items-center justify-between border-t border-slate-200 pt-3">
+                        <div class="flex items-center gap-2">
+                            <button id="whiteboard-undo-btn" class="inline-flex items-center justify-center p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all" title="Undo">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                                </svg>
+                            </button>
+                            <button id="whiteboard-clear-btn" class="inline-flex items-center justify-center p-2 rounded-lg bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-red-600 text-xs font-bold transition-all" title="Clear Board">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
+                        <button id="whiteboard-download-btn" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            <span>Save Notes</span>
+                        </button>
+                    </div>
+                </div>
             </div>
+
             @if($liveTelecast->description)
                 <p class="text-slate-600 text-sm leading-relaxed">{{ $liveTelecast->description }}</p>
             @endif
         </div>
     @endif
+
+    <!-- Whiteboard Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const toggleBtn = document.getElementById('toggle-whiteboard-btn');
+            const videoColumn = document.getElementById('video-column');
+            const whiteboardColumn = document.getElementById('whiteboard-column');
+            const canvas = document.getElementById('whiteboard-canvas');
+            
+            if (!toggleBtn || !canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+            let currentColor = '#0f172a';
+            let currentSize = 4;
+            let currentMode = 'draw'; // 'draw' or 'eraser'
+            let strokes = []; // Array of strokes
+            let currentStroke = null;
+            
+            // Handle toggle whiteboard
+            toggleBtn.addEventListener('click', function() {
+                const isOpen = !whiteboardColumn.classList.contains('hidden');
+                if (isOpen) {
+                    // Close
+                    whiteboardColumn.classList.add('hidden');
+                    whiteboardColumn.classList.remove('flex');
+                    videoColumn.classList.add('lg:col-span-5');
+                    videoColumn.classList.remove('lg:col-span-3');
+                    toggleBtn.querySelector('span').innerText = 'Open Whiteboard';
+                } else {
+                    // Open
+                    whiteboardColumn.classList.remove('hidden');
+                    whiteboardColumn.classList.add('flex');
+                    videoColumn.classList.remove('lg:col-span-5');
+                    videoColumn.classList.add('lg:col-span-3');
+                    toggleBtn.querySelector('span').innerText = 'Close Whiteboard';
+                    
+                    // Initialize canvas dimensions
+                    setTimeout(resizeCanvas, 100);
+                }
+            });
+            
+            // Resize Handler
+            const resizeCanvas = () => {
+                const rect = canvas.parentNode.getBoundingClientRect();
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+                redraw();
+            };
+            
+            window.addEventListener('resize', () => {
+                if (!whiteboardColumn.classList.contains('hidden')) {
+                    resizeCanvas();
+                }
+            });
+            
+            // Drawing coordinates helper
+            const getCanvasCoords = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                return {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+            };
+            
+            // Touch & Stylus / E-Pen drawing handler using unified Pointer Events
+            canvas.addEventListener('pointerdown', function(e) {
+                isDrawing = true;
+                const coords = getCanvasCoords(e);
+                lastX = coords.x;
+                lastY = coords.y;
+                
+                currentStroke = {
+                    color: currentColor,
+                    size: currentSize,
+                    mode: currentMode,
+                    pointerType: e.pointerType,
+                    points: [{ x: coords.x, y: coords.y, pressure: e.pressure || 0.5 }]
+                };
+                strokes.push(currentStroke);
+                
+                // Draw a dot immediately on press
+                ctx.beginPath();
+                ctx.arc(lastX, lastY, (currentSize / 2) * (e.pressure ? e.pressure * 1.5 : 1), 0, Math.PI * 2);
+                ctx.fillStyle = currentMode === 'eraser' ? '#ffffff' : currentColor;
+                ctx.fill();
+                
+                e.preventDefault();
+            });
+            
+            canvas.addEventListener('pointermove', function(e) {
+                if (!isDrawing) return;
+                
+                const coords = getCanvasCoords(e);
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(coords.x, coords.y);
+                
+                // Read pen pressure to scale line width dynamically (calligraphy/natural strokes!)
+                const pressureScale = e.pressure && e.pointerType === 'pen' ? e.pressure * 1.8 : 1.0;
+                ctx.lineWidth = currentSize * pressureScale;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.strokeStyle = currentMode === 'eraser' ? '#ffffff' : currentColor;
+                ctx.stroke();
+                
+                currentStroke.points.push({ x: coords.x, y: coords.y, pressure: e.pressure || 0.5 });
+                
+                lastX = coords.x;
+                lastY = coords.y;
+                
+                e.preventDefault();
+            });
+            
+            const stopDrawing = (e) => {
+                isDrawing = false;
+                currentStroke = null;
+            };
+            
+            canvas.addEventListener('pointerup', stopDrawing);
+            canvas.addEventListener('pointercancel', stopDrawing);
+            canvas.addEventListener('pointerleave', stopDrawing);
+            
+            // Redraw history
+            const redraw = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                strokes.forEach(stroke => {
+                    if (stroke.points.length === 0) return;
+                    
+                    if (stroke.points.length === 1) {
+                        ctx.beginPath();
+                        const p = stroke.points[0];
+                        ctx.arc(p.x, p.y, (stroke.size / 2) * (p.pressure ? p.pressure * 1.5 : 1), 0, Math.PI * 2);
+                        ctx.fillStyle = stroke.mode === 'eraser' ? '#ffffff' : stroke.color;
+                        ctx.fill();
+                        return;
+                    }
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.strokeStyle = stroke.mode === 'eraser' ? '#ffffff' : stroke.color;
+                    
+                    for (let i = 1; i < stroke.points.length; i++) {
+                        const p = stroke.points[i];
+                        const pressureScale = p.pressure && stroke.pointerType === 'pen' ? p.pressure * 1.8 : 1.0;
+                        ctx.lineWidth = stroke.size * pressureScale;
+                        ctx.lineTo(p.x, p.y);
+                    }
+                    ctx.stroke();
+                });
+            };
+            
+            // Brush Color Selection
+            const colorBtns = document.querySelectorAll('#whiteboard-colors button[data-color]');
+            colorBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    currentColor = btn.getAttribute('data-color');
+                    currentMode = 'draw';
+                    
+                    colorBtns.forEach(b => b.classList.remove('active-color-btn'));
+                    btn.classList.add('active-color-btn');
+                    document.getElementById('whiteboard-eraser-btn').classList.remove('active-color-btn');
+                });
+            });
+            
+            // Eraser Selection
+            const eraserBtn = document.getElementById('whiteboard-eraser-btn');
+            eraserBtn.addEventListener('click', function() {
+                currentMode = 'eraser';
+                colorBtns.forEach(b => b.classList.remove('active-color-btn'));
+                eraserBtn.classList.add('active-color-btn');
+            });
+            
+            // Brush Size Slider
+            const sizeSlider = document.getElementById('whiteboard-brush-size');
+            const sizeDisplay = document.getElementById('brush-size-display');
+            sizeSlider.addEventListener('input', function() {
+                currentSize = parseInt(sizeSlider.value);
+                sizeDisplay.innerText = currentSize;
+            });
+            
+            // Background Pattern Toggle
+            const patternBtns = document.querySelectorAll('.pattern-btn');
+            patternBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const pattern = btn.getAttribute('data-pattern');
+                    
+                    canvas.className = 'w-full h-full block cursor-crosshair';
+                    canvas.classList.add('canvas-' + pattern);
+                    
+                    patternBtns.forEach(b => {
+                        b.classList.remove('bg-white', 'text-slate-800', 'shadow-sm');
+                        b.classList.add('text-slate-600', 'hover:text-slate-800');
+                    });
+                    btn.classList.add('bg-white', 'text-slate-800', 'shadow-sm');
+                    btn.classList.remove('text-slate-600', 'hover:text-slate-800');
+                });
+            });
+            
+            // Undo Action
+            document.getElementById('whiteboard-undo-btn').addEventListener('click', function() {
+                strokes.pop();
+                redraw();
+            });
+            
+            // Clear Board Action
+            document.getElementById('whiteboard-clear-btn').addEventListener('click', function() {
+                if (confirm('Clear entire whiteboard?')) {
+                    strokes = [];
+                    redraw();
+                }
+            });
+            
+            // Download Notes Action
+            document.getElementById('whiteboard-download-btn').addEventListener('click', function() {
+                const exportCanvas = document.createElement('canvas');
+                exportCanvas.width = canvas.width;
+                exportCanvas.height = canvas.height;
+                const exportCtx = exportCanvas.getContext('2d');
+                
+                exportCtx.fillStyle = '#ffffff';
+                exportCtx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                if (canvas.classList.contains('canvas-grid')) {
+                    exportCtx.strokeStyle = '#e2e8f0';
+                    exportCtx.lineWidth = 1;
+                    for (let x = 0; x < canvas.width; x += 20) {
+                        for (let y = 0; y < canvas.height; y += 20) {
+                            exportCtx.beginPath();
+                            exportCtx.arc(x, y, 1, 0, Math.PI * 2);
+                            exportCtx.fillStyle = '#cbd5e1';
+                            exportCtx.fill();
+                        }
+                    }
+                } else if (canvas.classList.contains('canvas-ruled')) {
+                    exportCtx.strokeStyle = '#e2e8f0';
+                    exportCtx.lineWidth = 1;
+                    for (let y = 28; y < canvas.height; y += 28) {
+                        exportCtx.beginPath();
+                        exportCtx.moveTo(0, y);
+                        exportCtx.lineTo(canvas.width, y);
+                        exportCtx.stroke();
+                    }
+                }
+                
+                strokes.forEach(stroke => {
+                    if (stroke.points.length === 0) return;
+                    
+                    if (stroke.points.length === 1) {
+                        exportCtx.beginPath();
+                        const p = stroke.points[0];
+                        exportCtx.arc(p.x, p.y, (stroke.size / 2) * (p.pressure ? p.pressure * 1.5 : 1), 0, Math.PI * 2);
+                        exportCtx.fillStyle = stroke.mode === 'eraser' ? '#ffffff' : stroke.color;
+                        exportCtx.fill();
+                        return;
+                    }
+                    
+                    exportCtx.beginPath();
+                    exportCtx.moveTo(stroke.points[0].x, stroke.points[0].y);
+                    exportCtx.lineCap = 'round';
+                    exportCtx.lineJoin = 'round';
+                    exportCtx.strokeStyle = stroke.mode === 'eraser' ? '#ffffff' : stroke.color;
+                    
+                    for (let i = 1; i < stroke.points.length; i++) {
+                        const p = stroke.points[i];
+                        const pressureScale = p.pressure && stroke.pointerType === 'pen' ? p.pressure * 1.8 : 1.0;
+                        exportCtx.lineWidth = stroke.size * pressureScale;
+                        exportCtx.lineTo(p.x, p.y);
+                    }
+                    exportCtx.stroke();
+                });
+                
+                const dataUrl = exportCanvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.download = 'thisai-whiteboard-notes.png';
+                link.href = dataUrl;
+                link.click();
+            });
+        });
+    </script>
 
     <!-- Content Split Row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">

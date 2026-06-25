@@ -4,13 +4,16 @@ namespace App\Models;
 
 use App\Enums\QuestionType;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'exam_id',
     'subject_id',
+    'topic_id',
     'question_text',
     'explanation',
     'type',
@@ -43,8 +46,49 @@ class Question extends Model
         return $this->belongsTo(Subject::class);
     }
 
+    public function topic(): BelongsTo
+    {
+        return $this->belongsTo(QuestionTopic::class, 'topic_id');
+    }
+
     public function options(): HasMany
     {
         return $this->hasMany(Option::class)->orderBy('sort_order');
+    }
+
+    public function exams(): BelongsToMany
+    {
+        return $this->belongsToMany(Exam::class, 'exam_question')
+            ->withPivot('sort_order');
+    }
+
+    public function attemptAnswers(): HasMany
+    {
+        return $this->hasMany(AttemptAnswer::class);
+    }
+
+    public function discussions(): HasMany
+    {
+        return $this->hasMany(Discussion::class);
+    }
+
+    public function scopeForSubject(Builder $query, int $subjectId): Builder
+    {
+        return $query->where('subject_id', $subjectId);
+    }
+
+    public function scopeForTopic(Builder $query, int $topicId): Builder
+    {
+        return $query->where('topic_id', $topicId);
+    }
+
+    public function scopeForDifficulty(Builder $query, string $difficulty): Builder
+    {
+        return $query->where('difficulty', $difficulty);
+    }
+
+    public function scopeStandalone(Builder $query): Builder
+    {
+        return $query->whereNull('exam_id');
     }
 }

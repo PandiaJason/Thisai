@@ -10,3 +10,6 @@ Artisan::command('inspire', function () {
 
 // Automatically clean expired live telecasts every minute
 Schedule::command('thisai:clean-live')->everyMinute();
+
+// Auto-submit expired exam attempts every minute
+Schedule::command('thisai:auto-submit-expired')->everyMinute();

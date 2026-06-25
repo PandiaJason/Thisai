@@ -84,6 +84,21 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(AuditLog::class);
     }
 
+    public function certificates(): HasMany
+    {
+        return $this->hasMany(Certificate::class);
+    }
+
+    public function discussions(): HasMany
+    {
+        return $this->hasMany(Discussion::class);
+    }
+
+    public function discussionReplies(): HasMany
+    {
+        return $this->hasMany(DiscussionReply::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

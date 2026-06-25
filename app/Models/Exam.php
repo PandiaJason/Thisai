@@ -6,6 +6,7 @@ use App\Enums\ExamType;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
@@ -70,6 +71,13 @@ class Exam extends Model
     public function questions(): HasMany
     {
         return $this->hasMany(Question::class)->orderBy('sort_order');
+    }
+
+    public function bankQuestions(): BelongsToMany
+    {
+        return $this->belongsToMany(Question::class, 'exam_question')
+            ->withPivot('sort_order')
+            ->orderByPivot('sort_order');
     }
 
     public function attempts(): HasMany

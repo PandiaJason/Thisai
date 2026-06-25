@@ -45,6 +45,16 @@ class Subject extends Model
         return $this->hasMany(Exam::class);
     }
 
+    public function topics(): HasMany
+    {
+        return $this->hasMany(QuestionTopic::class)->orderBy('sort_order');
+    }
+
+    public function questions(): HasMany
+    {
+        return $this->hasMany(Question::class);
+    }
+
     public function currentAffairs(): HasMany
     {
         return $this->hasMany(CurrentAffairs::class);

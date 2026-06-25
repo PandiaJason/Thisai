@@ -33,6 +33,7 @@
         <div>
             <div class="flex items-center justify-between mb-1.5">
                 <label for="password" class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Password</label>
+                <a href="{{ route('password.request') }}" class="text-xs text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-colors">Forgot Password?</a>
             </div>
             <input id="password" type="password" name="password" required autocomplete="current-password" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-4 py-2 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 transition-all">
             @error('password')

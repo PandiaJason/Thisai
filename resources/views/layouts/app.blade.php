@@ -51,6 +51,9 @@
                         <a href="{{ route('exams.index') }}" class="text-sm font-semibold {{ request()->routeIs('exams.*') ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600' }} transition-colors">Test Series</a>
                         <a href="{{ route('current-affairs.index') }}" class="text-sm font-semibold {{ request()->routeIs('current-affairs.*') ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600' }} transition-colors">Current Affairs</a>
                         <a href="{{ route('leaderboard.index') }}" class="text-sm font-semibold {{ request()->routeIs('leaderboard.*') ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600' }} transition-colors">Rankings</a>
+                        <a href="{{ route('analytics.index') }}" class="text-sm font-semibold {{ request()->routeIs('analytics.*') ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600' }} transition-colors">Analytics</a>
+                        <a href="{{ route('discussions.index') }}" class="text-sm font-semibold {{ request()->routeIs('discussions.*') ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600' }} transition-colors">Forum</a>
+                        <a href="{{ route('certificates.index') }}" class="text-sm font-semibold {{ request()->routeIs('certificates.*') ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600' }} transition-colors">Certificates</a>
                     </nav>
                 </div>
 

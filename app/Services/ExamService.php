@@ -8,6 +8,8 @@ use App\Models\AttemptAnswer;
 use App\Models\Question;
 use App\Models\User;
 use App\Enums\ExamAttemptStatus;
+use App\Jobs\RecalculateLeaderboard;
+use App\Jobs\SendExamResultNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -92,8 +94,9 @@ class ExamService
         $attempt->accuracy = $result['accuracy'];
         $attempt->save();
 
-        // Calculate percentile & rank
-        $this->updatePercentilesAndRanks($attempt->exam_id);
+        // Dispatch async jobs for leaderboard recalculation and notification
+        RecalculateLeaderboard::dispatch($attempt->exam_id);
+        SendExamResultNotification::dispatch($attempt);
     }
 
     public function updatePercentilesAndRanks(int $examId): void

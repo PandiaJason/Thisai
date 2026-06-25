@@ -74,6 +74,16 @@ class Course extends Model
         return $this->hasMany(Video::class)->orderBy('sort_order');
     }
 
+    public function certificates(): HasMany
+    {
+        return $this->hasMany(Certificate::class);
+    }
+
+    public function discussions(): HasMany
+    {
+        return $this->hasMany(Discussion::class);
+    }
+
     public function scopePublished($query)
     {
         return $query->where('status', CourseStatus::PUBLISHED->value);
