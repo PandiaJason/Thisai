@@ -16,17 +16,32 @@ THISAI is a premium, high-performance, dark-mode-first ed-tech platform specific
 - **Motivating Dashboard**: Features welcome cards with dynamic quotes, daily streaks, quick stats (courses enrolled, watched videos, tests taken), a weekly score chart (Chart.js), and daily current affairs.
 - **Course Player & Catalog**: Premium course layout filterable by subjects. Includes video player page integrated with Bunny Stream, and checkmark trackable accordion curriculum.
 - **Daily Current Affairs**: Filterable by source (Daily, Editorial, PIB, Schemes, Facts) with bookmarks and date navigation.
-- **Real-Time Leaderboards**: Showcases daily, weekly, monthly, and overall top performers on a animated 3-tier podium.
+- **Real-Time Leaderboards**: Showcases daily, weekly, monthly, and overall top performers on an animated 3-tier podium.
+- **Student Analytics**: A detailed dashboard featuring score trends, subject performance heatmaps, weak areas, and a timeline tracking improvement metrics over time.
+- **Discussion Forums**: Full-featured community doubt-solving boards allowing students to create threads, post replies, upvote/downvote discussions, and mark questions as resolved.
+- **Performance Certificates**: Earn verified completion certificates upon completing courses and exams, backed by a public verification system (`/certificates/verify/{id}`) and downloadable PDFs.
 
 ### 📝 Interactive Secure Exam Engine
 - **Secure Exam Mode Overlay**: Enforces fullscreen mode via HTML5 API. Exiting fullscreen, switching tabs, or resizing warning counts are logged.
 - **Staggered AJAX Save**: Auto-saves student selections on-the-fly via API to prevent answer loss.
 - **Palette Navigation**: Visual color-coded grid representing visited, skipped, answered, and current states.
-- **Result Analysis**: Shows circular progress scorecards, accuracy/percentile charts, and question-by-question reviews showing correct vs. incorrect answers and detailed explanations.
+- **USP: Time & Subject Analytics**: Integrates a detailed scorecard featuring a **Time vs. Correctness Matrix** (classifying questions into Quick/Medium/Slow vs. Correct/Wrong to track near-misses, overthinking, and careless errors) alongside an interactive Subject Radar Chart.
 
 ### 🏛️ Filament 4 Panels (Admin & Faculty)
-- **Admin Panel (`/admin`)**: Complete student, course, batch, exam, subject, current affairs, live stream, and system audit log management.
+- **Admin Panel (`/admin`)**: Complete student, course, batch, exam, subject, current affairs, live stream, and system audit log management. Inherits all Faculty resource tools for Super Admins.
 - **Faculty Panel (`/faculty`)**: Restricted views allowing instructors to manage courses, add chapters/videos, configure exams, write current affairs, and schedule live streams.
+- **Faculty Exam Analytics**: Custom panel featuring CSV results exports, question difficulty indices, and lists of the top 10 most missed questions.
+- **Standalone Question Bank & Bulk Import**: Manage questions globally independent of exams. Features a **Bulk Import** wizard that parses raw text/CSV question formats automatically.
+
+### 🎨 Live Class Interactive Whiteboard
+- **Split-Screen Interactive Layout**: Seamlessly opens a side-by-side whiteboard canvas next to the live video classes player.
+- **Active E-Pen & Stylus Support**: Developed using the HTML5 Pointer Events API for full compatibility with Apple Pencil, Samsung S-Pen, etc. Supports dynamic pressure sensitivity (calligraphy strokes) and palm rejection.
+- **Grid & Notebook Layouts**: Instantly toggles canvas backgrounds between Plain, Grid, and Ruled templates. Includes undo, canvas clear, and save-as-PNG notes actions.
+
+### 🛡️ Security & Queue Infrastructure
+- **Brute-Force Rate Limiting**: Enforces strict throttling policies on auth routes (login, registration, password resets).
+- **Asynchronous Processing**: Background workers powered by Redis process high-load tasks asynchronously, including leaderboard recalculations and result email notifications.
+- **Scheduled Auto-Submissions**: An automated schedule command checks hourly for active attempts exceeding the max duration, force-submitting them server-side.
 
 ---
 
