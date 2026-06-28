@@ -67,11 +67,11 @@ cp .env.example .env
 Ensure your database parameters in `.env` match the Docker config:
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=db
+DB_HOST=pgsql
 DB_PORT=5432
 DB_DATABASE=thisai
-DB_USERNAME=postgres
-DB_PASSWORD=postgres
+DB_USERNAME=thisai
+DB_PASSWORD=thisai_secret_2024
 ```
 
 ### 2. Start Docker Containers
