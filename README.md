@@ -150,6 +150,33 @@ For 5,000+ concurrent users in production, additionally deploy:
 - **Laravel Horizon**: Auto-scaling queue workers for background job processing
 - **Horizontal Pod Autoscaling**: Run Nginx + PHP-FPM inside containerized node groups (ECS/EKS) that scale based on CPU/memory thresholds
 
+### 🧪 Local Load Testing (Validation)
+To validate this scalability architecture locally on your machine without destroying your hardware resources, we provide a load-test environment using **Grafana k6** running inside Docker:
+
+1. **Boot the Scaled Infrastructure** (3 PHP nodes, PgBouncer, Nginx Load Balancer, Redis):
+   ```bash
+   docker compose -f docker-compose.loadtest.yml up -d --build
+   ```
+2. **Seed 10,000 Virtual Students**:
+   ```bash
+   docker compose -f docker-compose.loadtest.yml exec app-1 php artisan db:seed --class=LoadTestSeeder
+   ```
+3. **Run a Safe Load Test (e.g. 50 Virtual Users)**:
+   ```bash
+   docker run --rm --network thisai_thisai-network -i grafana/k6 run --env BASE_URL=http://nginx --env TOTAL_VUS=50 --env EXAM_SLUG=polity-daily-quiz-1 - <tests/Load/exam_load_test.js
+   ```
+4. **Clean up and Reset Attempts / Flush Cache**:
+   ```bash
+   # Reset all attempt data
+   docker compose -f docker-compose.loadtest.yml exec app-1 php artisan tinker --execute="App\Models\ExamAttempt::truncate(); App\Models\AttemptAnswer::truncate();"
+   # Flush Redis rate-limits and cache
+   docker compose -f docker-compose.loadtest.yml exec redis redis-cli flushall
+   ```
+5. **Teardown Load-Test Infrastructure**:
+   ```bash
+   docker compose -f docker-compose.loadtest.yml down -v
+   ```
+
 ---
 
 ## 📄 License
