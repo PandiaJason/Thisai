@@ -87,7 +87,29 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+
+            /*
+             * SCALABILITY: Read/Write connection splitting.
+             *
+             * Write queries (exam starts, answer saves, submissions) go to the primary host.
+             * Read queries (dashboard loads, leaderboards, course catalogs) route to read replicas
+             * when DB_READ_HOST is configured, distributing load across multiple database servers.
+             *
+             * To enable: set DB_READ_HOST in .env to your read replica hostname.
+             * If DB_READ_HOST is not set, both reads and writes go to DB_HOST (single server mode).
+             */
+            'read' => [
+                'host' => [
+                    env('DB_READ_HOST', env('DB_HOST', '127.0.0.1')),
+                ],
+            ],
+            'write' => [
+                'host' => [
+                    env('DB_HOST', '127.0.0.1'),
+                ],
+            ],
+            'sticky' => true, // After a write, subsequent reads in the same request use the write connection
+
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'laravel'),
             'username' => env('DB_USERNAME', 'root'),

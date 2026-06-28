@@ -27,10 +27,12 @@ Route::get('/', function () {
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
+    $throttle = app()->environment('local') ? 'throttle:10000,1' : 'throttle:5,1';
+
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,1');
+    Route::post('/login', [LoginController::class, 'login'])->middleware($throttle);
     Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [RegisterController::class, 'register'])->middleware('throttle:5,1');
+    Route::post('/register', [RegisterController::class, 'register'])->middleware($throttle);
 
     // Password Reset
     Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('password.request');

@@ -25,9 +25,10 @@ class LoginController extends Controller
         ]);
 
         $throttleKey = 'login-' . Str::transliterate(Str::lower($request->email)) . '|' . $request->ip();
+        $maxAttempts = app()->environment('local') ? 1000 : 5;
 
-        // Check rate limit: 5 attempts per 60 seconds
-        if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
+        // Check rate limit
+        if (RateLimiter::tooManyAttempts($throttleKey, $maxAttempts)) {
             $seconds = RateLimiter::availableIn($throttleKey);
 
             return back()

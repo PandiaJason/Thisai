@@ -143,6 +143,8 @@ class ExamController extends Controller
             return redirect()->route('exams.index')->with('error', 'This exam does not have any questions yet.');
         }
         
+        // With lazy answer creation, the answers collection may be empty or partial.
+        // Key existing answers by question_id for the frontend to use.
         $answers = $attempt->answers->keyBy('question_id');
 
         return view('exams.take', compact('attempt', 'exam', 'questions', 'answers'));

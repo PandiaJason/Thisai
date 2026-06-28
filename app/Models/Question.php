@@ -3,13 +3,16 @@
 namespace App\Models;
 
 use App\Enums\QuestionType;
+use App\Observers\QuestionObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[ObservedBy(QuestionObserver::class)]
 #[Fillable([
     'exam_id',
     'subject_id',
