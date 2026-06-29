@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'target_exam',
     'target_year',
     'batch_id',
+    'current_streak',
+    'highest_streak',
+    'last_activity_date',
 ])]
 class StudentProfile extends Model
 {
@@ -23,6 +26,9 @@ class StudentProfile extends Model
         return [
             'date_of_birth' => 'date',
             'target_year' => 'integer',
+            'current_streak' => 'integer',
+            'highest_streak' => 'integer',
+            'last_activity_date' => 'date',
         ];
     }
 

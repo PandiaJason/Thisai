@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             SubjectSeeder::class,
             AdminSeeder::class,
             DemoDataSeeder::class,
+            BadgeSeeder::class,
         ]);
     }
 }

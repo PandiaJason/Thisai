@@ -16,6 +16,40 @@
             <p class="text-blue-100 text-sm max-w-xl">"Success is not final, failure is not fatal: it is the courage to continue that counts." Access your daily IAS syllabus preparation modules below.</p>
         </div>
 
+        <div class="flex items-center gap-6 shrink-0 relative z-10">
+            <!-- Streak Fire Badge -->
+            <div class="flex items-center gap-3 bg-white/10 border border-white/20 px-4 py-3 rounded-xl shadow-lg">
+                <svg class="w-8 h-8 text-amber-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <div>
+                    <span class="text-[10px] uppercase font-bold text-blue-100 tracking-wider block">Prep Streak</span>
+                    <span class="text-lg font-black text-white block leading-none mt-1">{{ $profile->current_streak ?? 0 }} Days</span>
+                </div>
+            </div>
+
+            <!-- Rank Trend Badge -->
+            @if($currentRank)
+                <div class="flex items-center gap-3 bg-white/10 border border-white/20 px-4 py-3 rounded-xl shadow-lg">
+                    <div class="w-8 h-8 rounded-full bg-white/25 flex items-center justify-center font-black text-white text-xs border border-white/30">
+                        #{{ $currentRank }}
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-blue-100 tracking-wider block">Weekly Rank</span>
+                        <span class="text-sm font-black text-white flex items-center gap-1 mt-1 leading-none">
+                            Rank {{ $currentRank }}
+                            @if($rankChange !== null && $rankChange !== 0)
+                                <span class="{{ $rankChange > 0 ? 'text-emerald-400' : 'text-red-400' }} text-[10px] font-extrabold flex items-center">
+                                    {{ $rankChange > 0 ? '▲' : '▼' }} {{ abs($rankChange) }}
+                                </span>
+                            @endif
+                        </span>
+                    </div>
+                </div>
+            @endif
+        </div>
+
         @if($liveTelecast)
             <div class="relative z-10 flex items-center gap-4 bg-white/10 border border-white/20 p-4 rounded-xl max-w-sm">
                 <span class="w-3.5 h-3.5 bg-red-500 rounded-full pulse-red-dot shrink-0"></span>
@@ -558,6 +592,37 @@
                 </h3>
                 <div class="h-64">
                     <canvas id="weeklyProgressChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Achievements & UPSC Badges -->
+            <div class="glass-card p-6 rounded-2xl space-y-4">
+                <h3 class="text-base font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                    <span class="w-1 h-5 bg-amber-500 rounded-full"></span> Unlocked UPSC Achievements
+                </h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    @foreach($badges as $badge)
+                        @php $isUnlocked = in_array($badge->id, $unlockedBadgeIds); @endphp
+                        <div class="flex flex-col items-center text-center p-3 rounded-xl border {{ $isUnlocked ? 'border-amber-100 bg-amber-500/5' : 'border-slate-100 bg-slate-500/5 opacity-40' }} transition-all duration-300">
+                            <div class="relative mb-2">
+                                {!! $badge->icon_svg !!}
+                                @if($isUnlocked)
+                                    <span class="absolute -bottom-1 -right-1 bg-amber-500 text-white rounded-full p-0.5 border border-white flex items-center justify-center w-4.5 h-4.5 shadow-sm animate-bounce" title="Unlocked">
+                                        <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    </span>
+                                @else
+                                    <span class="absolute -bottom-1 -right-1 bg-slate-400 text-white rounded-full p-0.5 border border-white flex items-center justify-center w-4.5 h-4.5" title="Locked">
+                                        <svg class="w-2.5 h-2.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+                                    </span>
+                                @endif
+                            </div>
+                            <span class="text-xs font-bold text-slate-800 leading-tight">{{ $badge->name }}</span>
+                            <span class="text-[9px] text-slate-500 leading-tight mt-1">{{ $badge->description }}</span>
+                            @if($isUnlocked)
+                                <span class="text-[9px] font-extrabold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded-full mt-1.5 leading-none">+{{ $badge->points }} XP</span>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
 

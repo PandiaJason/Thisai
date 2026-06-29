@@ -89,6 +89,13 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Certificate::class);
     }
 
+    public function badges(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Badge::class, 'user_badges')
+            ->withPivot('unlocked_at')
+            ->withTimestamps();
+    }
+
     public function discussions(): HasMany
     {
         return $this->hasMany(Discussion::class);

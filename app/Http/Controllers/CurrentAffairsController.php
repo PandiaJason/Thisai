@@ -42,6 +42,15 @@ class CurrentAffairsController extends Controller
 
         $article->load(['subject', 'author']);
 
+        // Track study streak
+        if (auth()->check()) {
+            try {
+                app(\App\Services\AchievementService::class)->trackActivity(auth()->user());
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::error("Failed to track achievements on Current Affairs view: " . $e->getMessage());
+            }
+        }
+
         // Related articles
         $related = CurrentAffairs::published()
             ->where('id', '!=', $article->id)

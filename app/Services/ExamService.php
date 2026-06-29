@@ -114,6 +114,14 @@ class ExamService
         $attempt->accuracy = $result['accuracy'];
         $attempt->save();
 
+        // Track achievement streaks and evaluate badges
+        try {
+            $achievementService = app(\App\Services\AchievementService::class);
+            $achievementService->trackActivity($attempt->user);
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("Failed to track achievements on exam submission: " . $e->getMessage());
+        }
+
         // Dispatch async jobs for leaderboard recalculation and notification
         RecalculateLeaderboard::dispatch($attempt->exam_id);
         SendExamResultNotification::dispatch($attempt);

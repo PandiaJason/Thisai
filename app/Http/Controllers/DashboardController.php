@@ -76,6 +76,27 @@ class DashboardController extends Controller
             ->orderBy('submitted_at')
             ->get();
 
+        // 9. Gamified Streaks, Badges & Rank Trends
+        $profile = $user->studentProfile;
+        $badges = \App\Models\Badge::all();
+        $unlockedBadgeIds = $user->badges()->pluck('badges.id')->toArray();
+
+        $currentRank = \App\Models\LeaderboardSnapshot::where('user_id', $user->id)
+            ->where('period', 'weekly')
+            ->orderByDesc('period_date')
+            ->value('rank') ?? null;
+
+        $previousRank = \App\Models\LeaderboardSnapshot::where('user_id', $user->id)
+            ->where('period', 'weekly')
+            ->orderByDesc('period_date')
+            ->skip(1)
+            ->value('rank') ?? null;
+
+        $rankChange = null;
+        if ($currentRank && $previousRank) {
+            $rankChange = $previousRank - $currentRank; // Positive indicates rank climbed up
+        }
+
         return view('dashboard', compact(
             'enrollments',
             'recentVideos',
@@ -84,7 +105,12 @@ class DashboardController extends Controller
             'topStudents',
             'liveTelecast',
             'analytics',
-            'weeklyAttempts'
+            'weeklyAttempts',
+            'profile',
+            'badges',
+            'unlockedBadgeIds',
+            'currentRank',
+            'rankChange'
         ));
     }
 }

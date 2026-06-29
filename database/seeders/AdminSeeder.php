@@ -60,9 +60,9 @@ class AdminSeeder extends Seeder
 
         // Link student profile
         StudentProfile::updateOrCreate(
-            ['user_id' => $student->id],
+            ['enrollment_number' => 'THISAI-2026-0001'],
             [
-                'enrollment_number' => 'THISAI-2026-0001',
+                'user_id' => $student->id,
                 'date_of_birth' => '2001-08-15',
                 'city' => 'Chennai',
                 'state' => 'Tamil Nadu',
