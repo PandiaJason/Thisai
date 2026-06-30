@@ -19,7 +19,7 @@ THISAI is a premium, high-performance, dark-mode-first ed-tech platform specific
 - **Real-Time Leaderboards**: Showcases daily, weekly, monthly, and overall top performers on an animated 3-tier podium.
 - **Student Analytics**: A detailed dashboard featuring score trends, subject performance heatmaps, weak areas, and a timeline tracking improvement metrics over time.
 - **Discussion Forums**: Full-featured community doubt-solving boards allowing students to create threads, post replies, upvote/downvote discussions, and mark questions as resolved.
-- **Performance Certificates**: Earn verified completion certificates upon completing courses and exams, backed by a public verification system (`/certificates/verify/{id}`) and downloadable PDFs.
+- **UPSC Achievements & Prep Streaks**: Replaced generic course completion certificates with a gamified candidate badge grid. Tracks daily prep streaks (fire icon indicator) and weekly rank climbing trends (e.g., `▲ 4` or `▼ 2` ranks) calculated directly from leaderboard snapshots. Seeds 8 subject-themed SVG achievements (e.g. *Polity Pundit*, *Accuracy Ace*, *Streak Legend*).
 
 ### 📝 Interactive Secure Exam Engine
 - **Secure Exam Mode Overlay**: Enforces fullscreen mode via HTML5 API. Exiting fullscreen, switching tabs, or resizing warning counts are logged.
@@ -30,7 +30,8 @@ THISAI is a premium, high-performance, dark-mode-first ed-tech platform specific
 ### 🏛️ Filament 4 Panels (Admin & Faculty)
 - **Admin Panel (`/admin`)**: Complete student, course, batch, exam, subject, current affairs, live stream, and system audit log management. Inherits all Faculty resource tools for Super Admins.
 - **Faculty Panel (`/faculty`)**: Restricted views allowing instructors to manage courses, add chapters/videos, configure exams, write current affairs, and schedule live streams.
-- **Faculty Exam Analytics**: Custom panel featuring CSV results exports, question difficulty indices, and lists of the top 10 most missed questions.
+- **Student Attempt Detailed Reviews**: Faculty can inspect any student's completed quiz attempt to review their choices on every question (marking chosen options correct/wrong, showing time spent, and full explanations).
+- **Bulk CSV Result Downloads**: Header action lets faculty download detailed question-by-question spreadsheets mapping all student answers, scores, accuracy, and individual question latency.
 - **Standalone Question Bank & Bulk Import**: Manage questions globally independent of exams. Features a **Bulk Import** wizard that parses raw text/CSV question formats automatically.
 
 ### 🎨 Live Class Interactive Whiteboard
