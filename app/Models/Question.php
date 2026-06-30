@@ -25,9 +25,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'negative_marks',
     'tags',
     'sort_order',
+    'image_path',
 ])]
 class Question extends Model
 {
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->image_path ? \Illuminate\Support\Facades\Storage::url($this->image_path) : null;
+    }
     protected function casts(): array
     {
         return [

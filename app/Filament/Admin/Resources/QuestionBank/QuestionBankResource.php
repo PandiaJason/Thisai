@@ -93,6 +93,12 @@ class QuestionBankResource extends Resource
                             ->default(0),
                         Forms\Components\TagsInput::make('tags')
                             ->helperText('Add tags like "PYQ", "UPSC 2024", "Prelims"'),
+                        Forms\Components\FileUpload::make('image_path')
+                            ->label('Question Image (Diagram, Equation, or Graph)')
+                            ->image()
+                            ->directory('question-images')
+                            ->nullable()
+                            ->columnSpanFull(),
                         Forms\Components\RichEditor::make('question_text')
                             ->required()
                             ->maxLength(65535)

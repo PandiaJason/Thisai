@@ -130,6 +130,13 @@
                     {!! $question->question_text !!}
                 </div>
 
+                <!-- Question Diagram/Image -->
+                @if($question->image_path)
+                    <div class="my-3 flex justify-start">
+                        <img src="{{ $question->image_url }}" class="max-h-80 w-auto rounded-xl border border-slate-200 shadow-sm" alt="Question Diagram">
+                    </div>
+                @endif
+
                 <!-- Options -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                     @foreach($question->options as $opt)

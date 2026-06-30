@@ -53,6 +53,13 @@
             <!-- Question Text -->
             <div class="text-base sm:text-lg font-extrabold text-slate-800 leading-relaxed" x-html="currentQuestion().question_text"></div>
 
+            <!-- Question Diagram/Image -->
+            <template x-if="currentQuestion().image_url">
+                <div class="mt-4 flex justify-center">
+                    <img :src="currentQuestion().image_url" class="max-h-80 w-auto rounded-xl border border-slate-200 shadow-sm" alt="Question Diagram">
+                </div>
+            </template>
+
             <!-- Option Selections -->
             <div class="space-y-3 pt-4">
                 <template x-for="(option, idx) in currentQuestion().options" :key="option.id">
@@ -198,6 +205,7 @@
             questions: {!! json_encode($questions->map(fn($q) => [
                 'id' => $q->id,
                 'question_text' => $q->question_text,
+                'image_url' => $q->image_url,
                 'type' => $q->type->value,
                 'marks' => $q->marks,
                 'negative_marks' => $q->negative_marks,
