@@ -42,9 +42,13 @@ class FacultyAnalyticsPage extends Page
 
     public function mount(): void
     {
-        $this->examOptions = Exam::where('created_by', auth()->id())
-            ->where('is_published', true)
-            ->orderByDesc('created_at')
+        $query = Exam::query();
+
+        if (!auth()->user()->isSuperAdmin()) {
+            $query->where('created_by', auth()->id());
+        }
+
+        $this->examOptions = $query->orderByDesc('created_at')
             ->pluck('title', 'id')
             ->toArray();
 
@@ -65,7 +69,13 @@ class FacultyAnalyticsPage extends Page
             return;
         }
 
-        $exam = Exam::with('questions.subject', 'questions.options')->find($this->selectedExamId);
+        $query = Exam::with('questions.subject', 'questions.options');
+
+        if (!auth()->user()->isSuperAdmin()) {
+            $query->where('created_by', auth()->id());
+        }
+
+        $exam = $query->find($this->selectedExamId);
         if (!$exam) {
             return;
         }
@@ -240,7 +250,13 @@ class FacultyAnalyticsPage extends Page
 
     public function exportResultsCsv(): \Symfony\Component\HttpFoundation\StreamedResponse
     {
-        $exam = Exam::find($this->selectedExamId);
+        $query = Exam::query();
+
+        if (!auth()->user()->isSuperAdmin()) {
+            $query->where('created_by', auth()->id());
+        }
+
+        $exam = $query->find($this->selectedExamId);
         if (!$exam) {
             return response()->streamDownload(fn() => null, 'error.csv');
         }
